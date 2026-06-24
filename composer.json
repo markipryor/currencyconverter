@@ -1,0 +1,9 @@
+{
+    "name": "markipryor/currencyconverter",
+    "description": "Currency converter",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
