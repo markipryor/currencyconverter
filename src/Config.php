@@ -1,5 +1,7 @@
 <?php
 
+/* This file stores shared const variables */
+
 namespace App;
 
 final class Config {

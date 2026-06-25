@@ -15,6 +15,8 @@ final class CurrencyConverter
 
     public function convert(string $fromCurrency, string $toCurrency, float $amount) :float {
 
+    //performs currency conversion from passed in values. Returns converted amount
+    
         if (!isset(self::AUD_rates[$fromCurrency])) {
             throw new \InvalidArgumentException("Unsupported currency: {$fromCurrency}");
         }
@@ -27,7 +29,7 @@ final class CurrencyConverter
             throw new \InvalidArgumentException("Amount must be greater than zero");
         }
 
-        if (($fromCurrency !== 'AUD') && ($toCurrency !== 'AUD')) {
+        if (($fromCurrency !== 'AUD') && ($toCurrency !== 'AUD')) { //this function only converts to or from AUD
             throw new \InvalidArgumentException("You must select to or from AUD");
         }
 
@@ -41,6 +43,10 @@ final class CurrencyConverter
     }
 
     public function writeToCsv(array $conversionData) :void {
+
+    //writes the conversion details to CSV file The file name and location is stored in Config.php
+
+    //The data written to the CSV file is amount , fromCurrency, convertedAmount, toCurrency 
 
         //Open the file in append mode
         $fileHandle = fopen(Config::CONVERSION_FILENAME , 'a');
