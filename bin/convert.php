@@ -16,6 +16,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\CurrencyConverter;
+use App\ConversionCsvWriter;
 
 if (($argc < 5) || (strtolower($argv[1]) !== 'convert')) {
     echo "The command you have entered is invalid. Enter: php bin/convert.php convert <fromCurrency> <toCurrency> <amount>\n";
@@ -38,12 +39,14 @@ try {
     exit(1);
 }
 
+
 //assign variables to array to pass to csv writer
 $conversionData = [ $amount , $fromCurrency, $convertedAmount, $toCurrency ];
       
 try {
     //write data to csv
-    $converter->writeToCsv($conversionData);
+    $writer = new ConversionCsvWriter();
+    $writer->writeToCsv($conversionData);
 } catch (\RuntimeException $e) {
     echo "Error: " . $e->getMessage() . "\n";
     exit(1);
