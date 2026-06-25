@@ -9,7 +9,6 @@ if (($argc < 5) || (strtolower($argv[1]) !== 'convert')) {
     exit(1);
 }
 
-
 $fromCurrency = strtoupper($argv[2]);
 $toCurrency = strtoupper($argv[3]);
 $amount = (float) $argv[4];
@@ -17,8 +16,19 @@ $amount = (float) $argv[4];
 $converter = new CurrencyConverter();
 
 try {
-    echo $converter->convert($fromCurrency,$toCurrency,$amount) . "\n";
+    $convertedAmount = $converter->convert($fromCurrency,$toCurrency,$amount);
+    echo $amount . ' ' . $fromCurrency . ' converts to ' . $convertedAmount . ' ' . $toCurrency . "\n";
 } catch (\InvalidArgumentException $e) {
     echo "Error: " . $e->getMessage() . "\n";
     exit(1);
 }
+
+$conversionData = [ $amount , $fromCurrency, $convertedAmount, $toCurrency ];
+      
+try {
+    $converter->writeToCsv($conversionData);
+} catch (\RuntimeException $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+    exit(1);
+}
+

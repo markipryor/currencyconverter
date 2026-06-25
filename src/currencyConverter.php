@@ -31,13 +31,30 @@ final class CurrencyConverter
             throw new \InvalidArgumentException("You must select to or from AUD");
         }
 
-        if ($fromCurrency == 'AUD') {
-            $convertedAmount = $amount * self::AUD_rates[$toCurrency];
+        if ($fromCurrency === 'AUD') {
+            $convertedAmount = $amount / self::AUD_rates[$toCurrency];
         } else {
-            $convertedAmount = $amount / self::AUD_rates[$fromCurrency];
+            $convertedAmount = $amount * self::AUD_rates[$fromCurrency];
         }
-        
+
         return round($convertedAmount, 2);
+    }
+
+    public function writeToCsv(array $conversionData) :void {
+
+        //Open the file in append mode
+        $fileHandle = fopen(Config::CONVERSION_FILENAME , 'a');
+
+        if ($fileHandle === false) {
+           throw new \RuntimeException("Unable to open conversions file for writing");
+        }
+
+        //Write the data to the file. Only writing one row at a time so no need to loop
+        fputcsv($fileHandle, $conversionData);
+        
+        //Close the file handle
+        fclose($fileHandle);
+
     }
 
 }
