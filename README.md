@@ -10,7 +10,7 @@ It only converts to or from AUD
 
 Conversion details are written to a CSV file
 
-Profit from the conversion transctions can be displayed using:
+Profit from the conversion transactions can be displayed using:
 
 php bin/profit.php profit
 
